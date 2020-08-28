@@ -1,24 +1,15 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Ship from './components/game/Ship.js'
 
 function App() {
+  const NewShip = Ship(6,[[5,5],[5,6]])
+  console.log(NewShip.getCoord() )
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{NewShip.getLength()}</h1>
+      <h1>{NewShip.isHit()}</h1>
+      <h1>{NewShip.isSunk()}</h1>
     </div>
   );
 }
