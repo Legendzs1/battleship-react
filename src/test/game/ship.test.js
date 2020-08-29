@@ -33,3 +33,10 @@ test("Testing coords if its a hit on a ship", () => {
     const newShip = createShip(4,[[5,5],[5,6],[5,7]]);
     expect(newShip.isHit([5,7])).toBeTruthy()
 })
+
+test("Testing is ship has been sunk" , () => {
+    const newShip = createShip(2,[[5,5],[5,6]]);
+    newShip.isHit([5,5]);
+    newShip.isHit([5,6]);
+    expect(newShip.isSunk()).toBeTruthy()
+})
