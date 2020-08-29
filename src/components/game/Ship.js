@@ -1,3 +1,4 @@
+const _ = require('lodash')
 
 const CreateShip = (shipLength, coords) => {
   const _length = shipLength
@@ -5,14 +6,23 @@ const CreateShip = (shipLength, coords) => {
   let _isHit = false
   let _isSunk = false
   const getLength = () => _length
-  const isHit = () =>  {
-
+  const isHit = (checkCoord) =>  {
+    let checkCoordinates = [checkCoord]
+    for(let i = 0; i < getCoord().length; i++) {
+      for(let x = 0; x < getCoord()[i].length; x++) {
+        if(_.isEqual(coord[0][x],checkCoordinates[0])){
+          _isHit = true
+          return _isHit
+        }
+      }
+    }
+    return false
   }
   const getCoord = () => coord
   const isSunk = () =>  _isSunk
   return { getLength, isHit, isSunk, getCoord }
 }
-// finish making a factory function for ship for part 1 of the steps
+
 
 
 export default CreateShip;

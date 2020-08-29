@@ -3,13 +3,12 @@ import './App.css';
 import Ship from './components/game/Ship.js'
 
 function App() {
-  const NewShip = Ship(6,[[5,5],[5,6]])
-  console.log(NewShip.getCoord() )
+  const NewShip = Ship(6,[[5,5],[5,6],[5,7]])
+  //console.log(NewShip.getCoord() )
+  console.log(NewShip.isHit([5,7]))
   return (
     <div className="App">
       <h1>{NewShip.getLength()}</h1>
-      <h1>{NewShip.isHit()}</h1>
-      <h1>{NewShip.isSunk()}</h1>
     </div>
   );
 }
