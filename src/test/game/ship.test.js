@@ -1,13 +1,6 @@
 import createShip from "../../components/game/Ship"
 const _ = require('lodash')
 
-const mockCreateShip = jest.fn()
-/* jest.mock("../../components/game/Ship", () => {
-    return jest.fn().mockImplementation(() => {
-        return {}
-    })
-}) */
-
 test("testing if ship is created", () => {
     const ship = createShip(4,[[5,5],[5,6],[5,7]]);
     expect(ship).toBeTruthy();
