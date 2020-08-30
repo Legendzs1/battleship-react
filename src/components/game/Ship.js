@@ -1,11 +1,11 @@
 const _ = require('lodash')
 
-const CreateShip = (shipLength, coords) => {
+const CreateShip = (coords) => {
   const coord = [coords]
-  let _shipLength = shipLength
+  let _shipLength = coords.length
   let _isHit = false
   let _isSunk = false
-  const getLength = () => _length
+  const getLength = () => _shipLength
   const isHit = (checkCoord) =>  {
     let checkCoordinates = [checkCoord]
     for(let i = 0; i < getCoord().length; i++) {
@@ -24,7 +24,8 @@ const CreateShip = (shipLength, coords) => {
   const getCoord = () => coord
   const isSunk = () =>  {
     if(_shipLength === 0){
-      return true;
+      _isSunk = true
+      return _isSunk;
     }
     return false;
   }
