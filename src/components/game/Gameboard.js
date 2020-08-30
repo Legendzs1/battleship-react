@@ -33,7 +33,7 @@ const Gameboard = () => {
         return true
     }
 
-
+    
     const returnListOfShips = () => {return listOfShips}
 
     const returnGameboard = () => _gameboard

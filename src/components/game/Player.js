@@ -12,7 +12,11 @@ const Player = () => {
         else {return false}
     }
 
-    return { isLegalMove }
+    const receiveMoveFromInput = () => {
+        return window.prompt("Enter your")
+    }
+
+    return { isLegalMove, receiveMoveFromInput }
 }
 
 
