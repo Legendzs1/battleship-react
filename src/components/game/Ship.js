@@ -11,9 +11,8 @@ const CreateShip = (coords) => {
     for(let i = 0; i < getCoord().length; i++) {
       for(let x = 0; x < getCoord()[i].length; x++) {
         if(_.isEqual(coord[0][x],checkCoordinates[0])){
-          isSunk();     _isHit = true;
+          _isHit = true;
           _shipLength--;
-          isSunk();
           return _isHit;
         }
       }

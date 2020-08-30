@@ -15,12 +15,22 @@ const Gameboard = () => {
     }
 
     const receiveAttack = (attackCoords) => {
-        if(returnListOfShips()[0].isHit(attackCoords)) {
-            returnGameboard()[attackCoords[0]][attackCoords[1]] = "HIT"
+        for(let i = 0; i < returnListOfShips().length; i++){
+            if(returnListOfShips()[i].isHit(attackCoords)){
+                returnGameboard()[attackCoords[0]][attackCoords[1]] = "HIT"
+                break;
+            }
+            else {returnGameboard()[attackCoords[0]][attackCoords[1]] = "Miss"}
         }
-        else returnGameboard()[attackCoords[0]][attackCoords[1]] = "O"
+    }
 
-         return returnListOfShips()[0].isHit(attackCoords)
+    const isAllShipsSunk = () => {
+        for(let i = 0; i < returnListOfShips().length; i++){
+            if(!returnListOfShips()[i].isSunk()) {
+                return false;
+            }
+        }
+        return true
     }
 
 
@@ -28,7 +38,7 @@ const Gameboard = () => {
 
     const returnGameboard = () => _gameboard
 
-    return { createShip, returnListOfShips, placeShip, receiveAttack, returnGameboard };
+    return { createShip, returnListOfShips, placeShip, receiveAttack, returnGameboard, isAllShipsSunk };
 };
 
 export default Gameboard;
