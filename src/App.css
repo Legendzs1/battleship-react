@@ -1,38 +1,45 @@
-.App {
-  text-align: center;
+
+
+:root {
+  /* Color Scheme */
+  --clr-light: #fff;
+  --clr-dark: #161819;
+
+  --clr-blue: #8ef2ff;
+  --clr-accent: #e36e40;
+
+  --grid-square-width: 40px;
+  --destroyer-width: 80px;
+  --cruiser-width: 120px;
+  --battleship-width: 160px;
+  --carrier-width: 200px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Neuton', serif;
+  font-size: 20px;
+  margin: 0;
+  padding: 0;
+  background-color: var(--clr-dark);
+  color: var(--clr-light);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.grid-container {
+  display: grid;
+  margin: 0 80px 80px 80px;
+  grid-template-columns: repeat(10, 1fr);
+  /* grid-template-rows: repeat(10, 1fr); */
+  border: 1px solid var(--clr-light);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.squares {
+  border: 1px solid var(--clr-light);
+  width: var(--grid-square-width);
+  height: var(--grid-square-width);
+}
+
+.game {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin-top: 40px;
 }

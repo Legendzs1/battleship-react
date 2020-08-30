@@ -2,9 +2,11 @@ import NewShip from './Ship'
 
 const Gameboard = () => {
     let listOfShips = []
-    const gameBoardIsHere = () => {return true}
-    const createShip = () => {
-        const ship = NewShip([[0,0],[0,1]])
+    let _gameboard = Array(10).fill(null)
+    .map(()=> Array(10).fill(null))
+
+    const createShip = (coords) => {
+        const ship = NewShip(coords)
         placeShip(ship)
     }
 
@@ -13,14 +15,20 @@ const Gameboard = () => {
     }
 
     const receiveAttack = (attackCoords) => {
+        if(returnListOfShips()[0].isHit(attackCoords)) {
+            returnGameboard()[attackCoords[0]][attackCoords[1]] = "HIT"
+        }
+        else returnGameboard()[attackCoords[0]][attackCoords[1]] = "O"
+
          return returnListOfShips()[0].isHit(attackCoords)
     }
 
+
     const returnListOfShips = () => {return listOfShips}
 
+    const returnGameboard = () => _gameboard
 
-
-    return { gameBoardIsHere, createShip, returnListOfShips, placeShip, receiveAttack };
+    return { createShip, returnListOfShips, placeShip, receiveAttack, returnGameboard };
 };
 
 export default Gameboard;
