@@ -32,7 +32,8 @@ test("Testing if Gameboard placed ship at the correct position on gameboard", ()
 test("Testing to user inputted coordinates is a hit on a ship", () => {
     const gameboard = Gameboard()
     gameboard.createShip([[0,0],[0,1]])
-    expect(gameboard.receiveAttack([0,0])).toBeTruthy()
+    gameboard.receiveAttack([0,0])
+    expect(gameboard.returnGameboard()[0][0]).toBe("HIT")
 })
 
 test("Testing to user inputted coordinates is not a hit on a ship", () => {

@@ -20,7 +20,7 @@ const Gameboard = () => {
                 returnGameboard()[attackCoords[0]][attackCoords[1]] = "HIT"
                 break;
             }
-            else {returnGameboard()[attackCoords[0]][attackCoords[1]] = "Miss"}
+            else {returnGameboard()[attackCoords[0]][attackCoords[1]] = "MISS"}
         }
     }
 
