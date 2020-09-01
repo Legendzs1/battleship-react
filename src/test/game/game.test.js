@@ -2,7 +2,7 @@ import Game from "../../components/game/Game"
 import Gameboard from "../../components/game/Gameboard"
 import NewPlayer from "../../components/game/Player"
 
-test("testing game loop is created", () => {
+test("testing game loop AI is winner", () => {
     const gameboards = [];
     const players = [];
     const gameboardP = Gameboard(); // player
