@@ -40,8 +40,8 @@ const Game = () => {
   };
   gameLoop();
   const handleClick = (e) => {
-    //console.log([parseInt(e.target.id),parseInt(e.target.parentNode.id)])
-    let coords = [parseInt(e.target.id),parseInt(e.target.parentNode.id)]
+    console.log([parseInt(e.target.parentNode.id) ,parseInt(e.target.id)])
+    let coords = [parseInt(e.target.parentNode.id) ,parseInt(e.target.id)]
     console.log(gameboardAI)
     player.isLegalMove(coords,gameboardAI)
     setGameboardAI({...gameboardAI})
