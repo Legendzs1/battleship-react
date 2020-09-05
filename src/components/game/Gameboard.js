@@ -15,6 +15,7 @@ const Gameboard = () => {
     }
 
     const receiveAttack = (attackCoords) => {
+        console.log("consoling from receive attack " + returnListOfShips())
         for(let i = 0; i < returnListOfShips().length; i++){
             if(returnListOfShips()[i].isHit(attackCoords)){
                 returnGameboard()[attackCoords[0]][attackCoords[1]] = "HIT"

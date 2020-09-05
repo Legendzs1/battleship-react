@@ -43,3 +43,29 @@ body {
   justify-content: center;
   margin-top: 40px;
 }
+
+
+
+.shipStyle {
+  height: var(--grid-square-width);
+  background-color: var(--clr-blue);
+  transition: opacity 0.1s ease;
+}
+
+
+
+.ships .ship {
+  width: var(--grid-square-width);
+}
+
+.ship {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 10em;
+  left: 4em;
+}
+
+.destroyer {
+  width: var(--destroyer-width);
+}

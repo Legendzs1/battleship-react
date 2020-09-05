@@ -1,7 +1,8 @@
-import React, { useState, forceUpdate } from "react";
+import React, { useState } from "react";
 import Gameboard from "./game/Gameboard";
 import NewPlayer from "./game/Player";
 import Grid from './Grid'
+import RShip from './RShip'
 
 const Game = () => {
   const [gameboardPlayer, setGameboardPlayer] = useState(Gameboard);
@@ -9,59 +10,75 @@ const Game = () => {
   //const [player, setPlayer] = useState(NewPlayer);
   const player = NewPlayer();
   //const [playerAI, setPlayerAI] = useState(NewPlayer);
-
-  const gameLoop = () => {
-    /*         let playerBoard = gameboards[0]
-        let aiBoard = gameboards[1]
-        let player = players[0]
-        let aiPlayer = players[1] */
-    gameboardPlayer.createShip([
-      [0, 0],
-      [0, 1],
-    ]); //player
+  const createAIShip = () => {
+    //console.log(gameboardAI.returnGameboard())
     gameboardAI.createShip([
       [5, 3],
       [5, 4],
       [5, 5],
-    ]); //ai
-    // let _isGame = true;
-    // while (_isGame) {
-    //   player.isLegalMove([5, 3], gameboardAI);
-    //   playerAI.isLegalMove([0, 0], gameboardPlayer);
-    //   if (gameboardAI.isAllShipsSunk()) {
-    //     _isGame = false;
-    //     return "Winner is human";
-    //   } else if (gameboardPlayer.isAllShipsSunk()) {
-    //     _isGame = false;
-    //     return "Winner is AI";
-    //   }
-    //   //_isGame = false;
-    // }
+    ]); 
+    //console.log(gameboardAI.returnListOfShips()[0].getCoord())
   };
-  gameLoop();
-  const handleClick = (e) => {
-    console.log([parseInt(e.target.parentNode.id) ,parseInt(e.target.id)])
-    let coords = [parseInt(e.target.parentNode.id) ,parseInt(e.target.id)]
-    console.log(gameboardAI)
+
+  const getLegalAIAttack = () => {
+    let legalMove = false
+    while(legalMove === false) {
+      let AISelection = player.isLegalMove([Math.floor(Math.random() * 10),Math.floor(Math.random() * 10)],gameboardPlayer)
+      if(AISelection === true){
+        legalMove = true
+        setGameboardPlayer({...gameboardPlayer})
+      }
+    }
+  }
+
+  createAIShip();
+  const handleClick = (event) => {
+    //console.log([parseInt(event.target.parentNode.id) ,parseInt(event.target.id)])
+    //console.log(gameboardPlayer.returnListOfShips())
+    let coords = [parseInt(event.target.parentNode.id) ,parseInt(event.target.id)]
+    //console.log(gameboardAI)
+    //console.log(gameboardPlayer.returnListOfShips()[0].getCoord())
     player.isLegalMove(coords,gameboardAI)
     setGameboardAI({...gameboardAI})
-    player.isLegalMove([Math.floor(Math.random() * 10),Math.floor(Math.random() * 10)],gameboardPlayer)
-    setGameboardPlayer({...gameboardPlayer})
+    getLegalAIAttack()
+    //player.isLegalMove([Math.floor(Math.random() * 10),Math.floor(Math.random() * 10)],gameboardPlayer)
+
     //console.log(gameboardAI)
     //setPlayerAI(playerAI)
     //setPlayer(player.isLegalMove(coords,gameboardAI))
     //console.log(e.target.parentNode.parentNode.id)
-    //handle click is essentially the game loop
-    //running into issue that setPlayer updates DOM elements into it and when
-    //the second time something is clicked it doesn't reconigze as undefined because of it
-
+    
   }
 
+  
+  const allowDrop = (event) => {
+    event.preventDefault();
+  }
+  
+  const drop = (event) => {
+    event.preventDefault();
+    //console.log(event.dataTransfer.getData())
+    //var data = event.dataTransfer.getData("Text");
+    //console.log(data)
+    //event.target.appendChild(document.getElementById(data));
+    event.target.className += " shipStyle"
+    let shipCoords = [[parseInt(event.target.parentNode.id) ,parseInt(event.target.id)]]
+    //console.log(shipCoords)
+    gameboardPlayer.createShip(shipCoords)
+    //console.log(gameboardPlayer.returnListOfShips()[0].getCoord())
+    setGameboardPlayer({...gameboardPlayer})
+    //console.log(gameboardPlayer.returnGameboard())
+    //setGameboardPlayer()
+    
+  }
+
+  
 
   return (
     <div className="game">
+        <RShip onDragOver={allowDrop} />
         <div>Player</div>
-        <Grid grid={gameboardPlayer} onClick={handleClick} gridID={"player"}/>
+        <Grid grid={gameboardPlayer} onClick={handleClick} gridID={"player"} onDrop={drop} onDragOver={allowDrop}/>
         <div>AI</div>
         <Grid grid={gameboardAI} onClick={handleClick} gridID={"ai"}/>
     </div>
