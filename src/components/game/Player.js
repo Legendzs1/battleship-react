@@ -1,23 +1,17 @@
-
 const Player = () => {
-
-    const _receiveCoordsToAttack = (coords, gameboard) => {
-        gameboard.receiveAttack(coords)
+  const _receiveCoordsToAttack = (coords, gameboard) => {
+    gameboard.receiveAttack(coords);
+  };
+  const isLegalMove = (coords, gameboard) => {
+    if (gameboard.returnGameboard()[coords[0]][coords[1]] === null) {
+      _receiveCoordsToAttack(coords, gameboard);
+      return true;
+    } else {
+      return false;
     }
-//if(gameboard.returnGameboard()[coords[0]][coords[1]] === null) {
-    const isLegalMove = (coords, gameboard) => {
-        //console.log(coords)
-        //console.log(gameboard.returnListOfShips()[0].getCoord())
-        if(gameboard.returnGameboard()[coords[0]][coords[1]] === null) {
-            _receiveCoordsToAttack(coords, gameboard)
-            return true
-        }
-        else {return false}
-    }
+  };
 
-    return { isLegalMove }
-}
-
-
+  return { isLegalMove };
+};
 
 export default Player;

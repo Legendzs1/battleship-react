@@ -1,115 +1,175 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Gameboard from "./game/Gameboard";
 import NewPlayer from "./game/Player";
-import Grid from './Grid'
-import RShip from './RShip'
+import Grid from "./Grid";
+import RShip from "./RShip";
 
 const Game = () => {
   const [gameboardPlayer, setGameboardPlayer] = useState(Gameboard);
   const [gameboardAI, setGameboardAI] = useState(Gameboard);
-  //const [player, setPlayer] = useState(NewPlayer);
+  const [gameWinnerText, setGameWinnerText] = useState("");
+  const [gameWinner, setGameWinner] = useState(false);
+  const [AIShipNums, setAIShipNums] = useState([]);
+  const [IDOfShip, setIDOfShip] = useState("");
   const player = NewPlayer();
-  //const [playerAI, setPlayerAI] = useState(NewPlayer);
+
+  const getAINum = () => {
+    let goodNum = false;
+    while (!goodNum) {
+      let num = Math.floor(Math.random() * 10);
+      for (let i = 0; i <= AIShipNums.length; i++) {
+        if (AIShipNums[i] === num) {
+          break;
+        } else if (i === AIShipNums.length) {
+          setAIShipNums(AIShipNums.push(num));
+          goodNum = true;
+          return num;
+        }
+      }
+    }
+  };
+
+  const generateAIShipCoord = (length) => {
+    let shipMap = [];
+    let randNum1 = getAINum();
+    let randNum2 = Math.floor(Math.random() * 5);
+    for (let i = 0; i < length; i++) {
+      if (i !== 0) {
+        shipMap.push([randNum1, randNum2++]);
+      } else {
+        shipMap.push([randNum1, randNum2]);
+        randNum2++;
+      }
+    }
+    return shipMap;
+  };
+
+  const setShipOnGrid = (id, xCoord, yCoord) => {
+    let ships = {
+      destroyer: 2,
+      cruiser: 3,
+      battleship: 4,
+      carrier: 5,
+    };
+    let player = document.getElementById("player");
+    let row = player.getElementsByClassName("rows");
+    let grid = [];
+    let length = ships[id];
+    let index = xCoord;
+    while (length > 0) {
+      if (index === 10) {
+        for (let i = 0; i < index - length; i++) {
+          row[xCoord++].children[yCoord].className += " shipStyle";
+          grid.push([parseInt(index++), parseInt(yCoord)]);
+          length--;
+        }
+      } else {
+        row[xCoord++].children[yCoord].className += " shipStyle";
+        grid.push([parseInt(index++), parseInt(yCoord)]);
+        length--;
+      }
+    }
+    return grid;
+  };
+
   const createAIShip = () => {
-    //console.log(gameboardAI.returnGameboard())
-    gameboardAI.createShip([
-      [5, 3],
-      [5, 4],
-      [5, 5],
-    ]); 
-    //console.log(gameboardAI.returnListOfShips()[0].getCoord())
+    let ships = {
+      0: generateAIShipCoord(2),
+      1: generateAIShipCoord(3),
+      2: generateAIShipCoord(4),
+      3: generateAIShipCoord(5),
+    };
+    for (let i = 0; i < 4; i++) {
+      gameboardAI.createShip(ships[i]);
+    }
   };
 
   const getLegalAIAttack = () => {
-    let legalMove = false
-    while(legalMove === false) {
-      let AISelection = player.isLegalMove([Math.floor(Math.random() * 10),Math.floor(Math.random() * 10)],gameboardPlayer)
-      if(AISelection === true){
-        legalMove = true
-        setGameboardPlayer({...gameboardPlayer})
+    let legalMove = false;
+    while (legalMove === false) {
+      let AISelection = player.isLegalMove(
+        [Math.floor(Math.random() * 10), Math.floor(Math.random() * 10)],
+        gameboardPlayer
+      );
+      if (AISelection === true) {
+        legalMove = true;
+        setGameboardPlayer({ ...gameboardPlayer });
       }
     }
-  }
+  };
+  const checkWinner = () => {
+    if (gameboardAI.isAllShipsSunk()) {
+      setGameWinner(true);
+      setGameWinnerText("Player is Winner");
+    } else if (gameboardPlayer.isAllShipsSunk()) {
+      setGameWinner(true);
+      setGameWinnerText("The AI is too powerful");
+    }
+  };
 
-  createAIShip();
   const handleClick = (event) => {
-    //console.log([parseInt(event.target.parentNode.id) ,parseInt(event.target.id)])
-    //console.log(gameboardPlayer.returnListOfShips())
-    let coords = [parseInt(event.target.parentNode.id) ,parseInt(event.target.id)]
-    //console.log(gameboardAI)
-    //console.log(gameboardPlayer.returnListOfShips()[0].getCoord())
-    player.isLegalMove(coords,gameboardAI)
-    setGameboardAI({...gameboardAI})
-    getLegalAIAttack()
-    //player.isLegalMove([Math.floor(Math.random() * 10),Math.floor(Math.random() * 10)],gameboardPlayer)
+    let coords = [
+      parseInt(event.target.parentNode.id),
+      parseInt(event.target.id),
+    ];
+    player.isLegalMove(coords, gameboardAI);
+    checkWinner();
+    setGameboardAI({ ...gameboardAI });
+    getLegalAIAttack();
+    checkWinner();
+  };
 
-    //console.log(gameboardAI)
-    //setPlayerAI(playerAI)
-    //setPlayer(player.isLegalMove(coords,gameboardAI))
-    //console.log(e.target.parentNode.parentNode.id)
-    
-  }
-
-  
-  const allowDrop = (event) => {
+  const allowDragging = (event) => {
     event.preventDefault();
-  }
-  
+  };
+
+  const dragStart = (event) => {
+    setIDOfShip(event.target.id);
+  };
+
+  const dragEnd = (event) => {
+    document.getElementById(event.target.id).setAttribute("draggable", false);
+    document.getElementById(event.target.id).style.backgroundColor = "#e36e40";
+  };
+
   const drop = (event) => {
     event.preventDefault();
-    //console.log(event.dataTransfer.getData())
-    //var data = event.dataTransfer.getData("Text");
-    //console.log(data)
-    //event.target.appendChild(document.getElementById(data));
-    event.target.className += " shipStyle"
-    let shipCoords = [[parseInt(event.target.parentNode.id) ,parseInt(event.target.id)]]
-    //console.log(shipCoords)
-    gameboardPlayer.createShip(shipCoords)
-    //console.log(gameboardPlayer.returnListOfShips()[0].getCoord())
-    setGameboardPlayer({...gameboardPlayer})
-    //console.log(gameboardPlayer.returnGameboard())
-    //setGameboardPlayer()
-    
-  }
+    event.target.className += " shipStyle";
+    let shipCoords = setShipOnGrid(
+      IDOfShip,
+      event.target.parentNode.id,
+      event.target.id
+    );
+    gameboardPlayer.createShip(shipCoords);
+    setGameboardPlayer({ ...gameboardPlayer });
+  };
 
-  
+  useEffect(() => {
+    createAIShip();
+  }, []);
 
   return (
     <div className="game">
-        <RShip onDragOver={allowDrop} />
-        <div>Player</div>
-        <Grid grid={gameboardPlayer} onClick={handleClick} gridID={"player"} onDrop={drop} onDragOver={allowDrop}/>
-        <div>AI</div>
-        <Grid grid={gameboardAI} onClick={handleClick} gridID={"ai"}/>
+      <RShip
+        onDragOver={allowDragging}
+        onDragStart={dragStart}
+        onDragEnd={dragEnd}
+      />
+      <div className="player">Player</div>
+      <Grid
+        grid={gameboardPlayer}
+        onClick={handleClick}
+        gridID={"player"}
+        onDrop={drop}
+        onDragOver={allowDragging}
+      />
+      <div className="player">AI</div>
+      <Grid grid={gameboardAI} onClick={handleClick} gridID={"ai"} />
+      <div className="winnerText">
+        {gameWinner ? <div>{gameWinnerText}</div> : <div></div>}
+      </div>
     </div>
   );
 };
 
 export default Game;
-
-/* <div className="game">
-<div>Player</div>
-<div className="grid-container">
-  {gameboardPlayer.returnGameboard().map((rows, indexR) => (
-    <div className="rows" key={indexR}>
-      {rows.map((squares, indexC) => (
-        <div className="squares" key={indexC}>
-          {squares}
-        </div>
-      ))}
-    </div>
-  ))}
-</div>
-<div>AI</div>
-<div className="grid-container">
-  {gameboardAI.returnGameboard().map((rows, indexR) => (
-    <div className="rows" key={indexR}>
-      {rows.map((squares, indexC) => (
-        <div className="squares" key={indexC}>
-          {squares}
-        </div>
-      ))}
-    </div>
-  ))}
-</div>
-</div> */

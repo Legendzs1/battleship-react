@@ -1,24 +1,38 @@
-import React, { useState } from "react";
-
+import React from "react";
 
 const RShip = (props) => {
-    //const [gameboardPlayer, setGameboardPlayer] = useState(props);
-
-
-    const ships = {
-      2: 'destroyer',
-      3: 'cruiser',
-      4: 'battleship',
-      5: 'carrier',
-    };
-    const shipStyles = {
-        height: "40px"
-    }
-
   return (
-    <div className="ships" onDragOver={props.onDragOver}>
-        <div className="destroyer ship shipStyle" draggable={true}></div>
+    <div
+      className="ships"
+      onDragOver={props.onDragOver}
+      onDragStart={props.onDragStart}
+    >
+      <h3>Ships</h3>
+      <div
+        className="ship shipStyle"
+        id="destroyer"
+        draggable={true}
+        onDragEnd={props.onDragEnd}
+      ></div>
+      <div
+        className="ship shipStyle"
+        id="cruiser"
+        draggable={true}
+        onDragEnd={props.onDragEnd}
+      ></div>
+      <div
+        className="ship shipStyle"
+        id="battleship"
+        draggable={true}
+        onDragEnd={props.onDragEnd}
+      ></div>
+      <div
+        className="ship shipStyle"
+        id="carrier"
+        draggable={true}
+        onDragEnd={props.onDragEnd}
+      ></div>
     </div>
   );
-}
+};
 export default RShip;

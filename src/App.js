@@ -2,11 +2,13 @@ import React from "react";
 import "./App.css";
 import Game from "./components/Game";
 
-const App = (props) =>{
-
+const App = (props) => {
   return (
-    <Game />
+    <div>
+      <Game />
+      <div className="rules">Drag your Ships to your grid to play</div>
+    </div>
   );
-}
+};
 
 export default App;

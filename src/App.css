@@ -17,7 +17,7 @@
 
 body {
   font-family: 'Neuton', serif;
-  font-size: 20px;
+  font-size: 15px;
   margin: 0;
   padding: 0;
   background-color: var(--clr-dark);
@@ -54,18 +54,44 @@ body {
 
 
 
-.ships .ship {
-  width: var(--grid-square-width);
+.ships {
+  margin-top: 6%;
 }
 
 .ship {
   display: flex;
   flex-direction: column;
-  position: absolute;
+  /* position: absolute; */
   top: 10em;
   left: 4em;
+  margin-bottom: 5px;
 }
 
-.destroyer {
+.ships #cruiser {
+  width: var(--cruiser-width);
+}
+.ships #destroyer {
   width: var(--destroyer-width);
+}
+.ships #battleship {
+  width: var(--battleship-width);
+}
+.ships #carrier {
+  width: var(--carrier-width);
+}
+
+.rules {
+  text-align: center;
+  font-size: 20px;
+}
+
+.winnerText {
+  position: fixed;
+  top: 50%;
+  text-align: center;
+  font-size: 20px;
+}
+
+.player {
+  font-size: 20px;
 }
