@@ -56,13 +56,14 @@ const Game = () => {
     let grid = [];
     let length = ships[id];
     let index = xCoord;
+    let initialVal = xCoord;
     while (length > 0) {
       if (index === 10) {
-        for (let i = 0; i < index - length; i++) {
-          row[xCoord++].children[yCoord].className += " shipStyle";
-          grid.push([parseInt(index++), parseInt(yCoord)]);
+          console.log(initialVal)
+          console.log(row[initialVal])
+          row[--initialVal].children[yCoord].className += " shipStyle";
+          grid.push([parseInt(initialVal), parseInt(yCoord)]);
           length--;
-        }
       } else {
         row[xCoord++].children[yCoord].className += " shipStyle";
         grid.push([parseInt(index++), parseInt(yCoord)]);
