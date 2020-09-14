@@ -59,8 +59,6 @@ const Game = () => {
     let initialVal = xCoord;
     while (length > 0) {
       if (index === 10) {
-          console.log(initialVal)
-          console.log(row[initialVal])
           row[--initialVal].children[yCoord].className += " shipStyle";
           grid.push([parseInt(initialVal), parseInt(yCoord)]);
           length--;
