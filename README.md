@@ -1,5 +1,5 @@
 ## Battleship the game
-https://dashboard.heroku.com/apps/battleship-react-app
+https://battleship-react-app.herokuapp.com/
 
 ## Motivation 
 Created the project as a part of [theodinproject.com](https://www.theodinproject.com/courses/javascript/lessons/battleship?ref=lnav) cirriculm. With the goal of having testing through Jest framework
